@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bank-simulator.iml" filepath="$PROJECT_DIR$/.idea/bank-simulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/history/.idea/history.iml" filepath="$PROJECT_DIR$/history/.idea/history.iml" />
       <module fileurl="file://$PROJECT_DIR$/transfer/.idea/transfer.iml" filepath="$PROJECT_DIR$/transfer/.idea/transfer.iml" />
     </modules>
   </component>
