@@ -1,13 +1,21 @@
 [tool.poetry]
-name = "transfer"
+name = "app"
 version = "0.1.0"
 description = ""
 authors = ["GuilhermeScherner <guibarasuol99@gmail.com>"]
+
+[tool.taskipy.tasks]
+dev = "uvicorn app.main:app --reload"
+migrate = "alembic upgrade head"
 
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.63.0"
 taskipy = "^1.6.0"
+SQLAlchemy = {version = "1.4.0b1", extras = ["postgresql"]}
+uvicorn = {extras = ["standard"], version = "^0.13.3"}
+alembic = "^1.4.3"
+asyncpg = "^0.21.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
