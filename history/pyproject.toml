@@ -4,8 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["GuilhermeScherner <guibarasuol99@gmail.com>"]
 
+[tool.taskipy.tasks]
+dev = "uvicorn app.main:app --reload --port 8001"
+
 [tool.poetry.dependencies]
 python = "^3.8"
+fastapi = "^0.63.0"
+mongo = "^0.2.0"
+odmantic = "^0.3.2"
+motor = "^2.3.0"
+taskipy = "^1.6.0"
+uvicorn = {extras = ["standard"], version = "^0.13.3"}
+asyncio = "^3.4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
