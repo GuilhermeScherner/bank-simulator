@@ -5,8 +5,20 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Float
 import sqlalchemy as sla
 from typing import List
+from aiokafka import AIOKafkaProducer
+import os
+import asyncio
+from dotenv import load_dotenv
 
 app = FastAPI()
+
+load_dotenv()
+KAFKA_TOPIC1 = os.getenv('KAFKA_TOPIC')
+loop = asyncio.get_event_loop()
+
+producer = AIOKafkaProducer(
+    loop=loop, client_id="money-transfer", bootstrap_servers="localhost:9092"
+)
 
 
 SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/banksimulator"
@@ -67,6 +79,16 @@ async def get_db():
         await db.close()
 
 
+@app.on_event("startup")
+async def startup_event() -> None:
+    await producer.start()
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    await producer.stop()
+
+
 @app.get("/users", response_model=ListUsers)
 async def get_all_users(db: AsyncSession = Depends(get_db)):
     qb = sla.select(Users)
@@ -105,7 +127,10 @@ async def create_transfer(transfer: TransferRequest, db: AsyncSession = Depends(
         await db.execute(qb)
 
         await db.commit()
+        await producer.send_and_wait(KAFKA_TOPIC1, b"Super message")
         return {"Result": "Success"}
     except:
         raise HTTPException(status_code=404, detail="Transition has not success")
+
+
 

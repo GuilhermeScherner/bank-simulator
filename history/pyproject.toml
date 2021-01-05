@@ -16,6 +16,7 @@ motor = "^2.3.0"
 taskipy = "^1.6.0"
 uvicorn = {extras = ["standard"], version = "^0.13.3"}
 asyncio = "^3.4.3"
+aiokafka = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -16,6 +16,7 @@ SQLAlchemy = {version = "1.4.0b1", extras = ["postgresql"]}
 uvicorn = {extras = ["standard"], version = "^0.13.3"}
 alembic = "^1.4.3"
 asyncpg = "^0.21.0"
+aiokafka = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
