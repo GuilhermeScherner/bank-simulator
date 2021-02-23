@@ -1,4 +1,5 @@
-from fastapi import FastAPI, APIRouter
+import uvicorn
+from fastapi import FastAPI, APIRouter, Depends
 from starlette.middleware.cors import CORSMiddleware
 from app.api.controller import transfer
 
@@ -13,5 +14,9 @@ app.add_middleware(
 )
 
 api_route = APIRouter()
-api_route.include_router(transfer.route, prefix="/transfer", tags=["transfer"])
-app.add_route()
+api_route.include_router(transfer.route, prefix="/transfer.py", tags=["transfer.py"])
+app.include_router(api_route, prefix="/api")
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
