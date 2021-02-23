@@ -13,7 +13,7 @@ services:
     - 9092:9092
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_CREATE_TOPICS: "money-transfer:1:1"
+      KAFKA_CREATE_TOPICS: "update_history"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
 
   postgres:
