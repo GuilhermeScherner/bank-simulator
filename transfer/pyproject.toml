@@ -5,7 +5,7 @@ description = ""
 authors = ["GuilhermeScherner <guibarasuol99@gmail.com>"]
 
 [tool.taskipy.tasks]
-dev = "uvicorn app.main:app --reload"
+dev = "uvicorn app.api.main:app --reload"
 migrate = "alembic upgrade head"
 
 [tool.poetry.dependencies]

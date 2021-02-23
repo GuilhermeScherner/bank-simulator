@@ -1,7 +1,10 @@
 from app.infraestructure.db.uow import UnitOfWork
 import sqlalchemy as sla
 import app.application.models.transfer as transfer_models
+from app.infraestructure.mappings.transfer import Users
 from aiokafka import AIOKafkaProducer
+from app.setting.producer.producer import KAFKA_TOPIC
+
 
 
 class TransferService:
@@ -9,18 +12,18 @@ class TransferService:
         self.uow = uow
 
     async def get_all_users(self):
-        qb = sla.select(transfer_models.Users)
-        result = await self.uow.execute(qb)
+        qb = sla.select(Users)
+        result = await self.uow.session.execute(qb)
         all_result = result.scalars().all()
         users = list(map(transfer_models.CreateUser.from_orm, all_result))
         return transfer_models.ListUsers(users=users)
 
     async def create_user(self, user: transfer_models.UserRequest):
         async with self.uow as uow:
-            create = transfer_models.Users(**user.dict())
-            uow.add(create)
-            await uow.commit()
-            await uow.refresh(create)
+            create = Users(**user.dict())
+            uow.session.add(create)
+            await uow.session.commit()
+            await uow.session.refresh(create)
             return transfer_models.UserResponse.from_orm(create)
 
     async def create_transfer(self, transfer: transfer_models.TransferRequest, producer: AIOKafkaProducer):
@@ -28,5 +31,4 @@ class TransferService:
             format(cpf_sender=transfer.cpf_sender, value=transfer.value, cpf_receiver=transfer.cpf_receiver,
                    description=transfer.description)
         msg = bytes(msg_string, encoding='utf-8')
-
-        await producer.send_and_wait(producer.KAFKA_TOPIC, value=msg)
+        await producer.send_and_wait(KAFKA_TOPIC, value=msg)

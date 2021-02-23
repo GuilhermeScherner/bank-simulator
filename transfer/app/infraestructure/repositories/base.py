@@ -1,7 +1,5 @@
 from typing import Generic, Type, TypeVar
-
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.infraestructure.mappings.base import BaseModel
 
 MappingType = TypeVar("MappingType", bound=BaseModel)

@@ -1,26 +1,27 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from __future__ import annotations
+from sqlalchemy.ext.asyncio import AsyncSession
 from functools import cached_property
+from app.infraestructure.repositories.transfer import TransferRepository
 
 
 class UnitOfWork:
-    def __init__(self, async_session: AsyncSession) -> None:
-        self.async_session = async_session
+    def __init__(self, session: AsyncSession):
+        self.session = session
 
-    def __enter__(self) -> UnitOfWork:
+    async def __aenter__(self) -> UnitOfWork:
         return self
 
-    def __exit__(self, exec_type, exec_value, exec_traceback) -> None:
-        if exec_type:
-            self.rollback()
+    async def __aexit__(self, exc_type, exc_value, exc_traceback):
+        if exc_type:
+            await self.rollback()
         else:
-            self.commit()
+            await self.commit()
 
-    def rollback(self) -> None:
-        self.async_session.rollback()
+    async def commit(self):
+        await self.session.commit()
 
-    def commit(self) -> None:
-        self.async_session.commit()
+    async def rollback(self):
+        await self.session.rollback()
 
     @cached_property
     def transfer(self) -> TransferRepository:
