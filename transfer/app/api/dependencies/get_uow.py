@@ -1,6 +1,6 @@
 from typing import Generator
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.infraestructure.db.databese import engine
+from app.infraestructure.db.database import engine
 from app.infraestructure.db.uow import UnitOfWork
 
 

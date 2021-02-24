@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="banksimulator">
+<dataSource name="PostgreSQL - banksimulator@localhost">
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.20">
     <root id="1">
       <ServerVersion>12.4</ServerVersion>
@@ -684,7 +684,7 @@ true Pacific/Easter
 false Pacific/Efate
 false Pacific/Enderbury
 false Pacific/Fakaofo
-true Pacific/Fiji
+false Pacific/Fiji
 false Pacific/Funafuti
 false Pacific/Galapagos
 false Pacific/Gambier
@@ -1334,7 +1334,7 @@ true posix/Pacific/Easter
 false posix/Pacific/Efate
 false posix/Pacific/Enderbury
 false posix/Pacific/Fakaofo
-true posix/Pacific/Fiji
+false posix/Pacific/Fiji
 false posix/Pacific/Funafuti
 false posix/Pacific/Galapagos
 false posix/Pacific/Gambier
@@ -1408,13 +1408,15 @@ false posix/WET
 false posix/Zulu
 false posixrules
 </TimeZones>
-      <StartupTime>1609442710</StartupTime>
+      <StartupTime>1614122936</StartupTime>
     </root>
     <database id="2" parent="1" name="banksimulator">
       <ObjectId>16384</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>490</IntrospectionStateNumber>
+      <IntrospectionStateNumber>503</IntrospectionStateNumber>
       <Current>1</Current>
+      <Relations>sequence|table|16402|16404|1
+</Relations>
     </database>
     <database id="3" parent="1" name="postgres">
       <ObjectId>13408</ObjectId>
@@ -1489,7 +1491,7 @@ UC/10
 </Acl>
       <StateNumber>276</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>491</IntrospectionStateNumber>
+      <IntrospectionStateNumber>504</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="18" parent="2" name="plpgsql">
@@ -1589,5 +1591,89 @@ UC/10
       <HandlerId>335</HandlerId>
       <Type>index</Type>
     </access-method>
+    <sequence id="30" parent="17" name="users_id_seq">
+      <ObjectId>16402</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>488</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <table id="31" parent="17" name="alembic_version">
+      <ObjectId>16385</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>488</StateNumber>
+    </table>
+    <table id="32" parent="17" name="users">
+      <ObjectId>16404</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>488</StateNumber>
+    </table>
+    <column id="33" parent="31" name="version_num">
+      <Position>1</Position>
+      <DataType>varchar(32)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>488</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="34" parent="31" name="alembic_version_pkc">
+      <ObjectId>16388</ObjectId>
+      <StateNumber>488</StateNumber>
+      <ColNames>version_num</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>100</CollationIds>
+      <CollationNames>default</CollationNames>
+      <ClassIds>3126</ClassIds>
+    </index>
+    <key id="35" parent="31" name="alembic_version_pkc">
+      <ObjectId>16389</ObjectId>
+      <StateNumber>488</StateNumber>
+      <ColNames>version_num</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>alembic_version_pkc</UnderlyingIndexName>
+    </key>
+    <column id="36" parent="32" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>488</StateNumber>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="37" parent="32" name="name">
+      <Position>2</Position>
+      <DataType>varchar|0s</DataType>
+      <StateNumber>488</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="38" parent="32" name="cpf">
+      <Position>3</Position>
+      <DataType>varchar|0s</DataType>
+      <StateNumber>488</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="39" parent="32" name="balance">
+      <Position>4</Position>
+      <DataType>double precision|0s</DataType>
+      <StateNumber>488</StateNumber>
+      <TypeId>701</TypeId>
+    </column>
+    <index id="40" parent="32" name="users_pkey">
+      <ObjectId>16411</ObjectId>
+      <StateNumber>488</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="41" parent="32" name="users_pkey">
+      <ObjectId>16412</ObjectId>
+      <StateNumber>488</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>
